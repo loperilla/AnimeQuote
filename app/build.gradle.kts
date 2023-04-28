@@ -3,9 +3,6 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
-//    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -66,10 +63,6 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-    //Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.bundles.firebase)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.test.ext.junit)

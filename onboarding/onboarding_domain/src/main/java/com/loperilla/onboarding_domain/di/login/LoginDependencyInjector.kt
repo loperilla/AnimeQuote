@@ -1,11 +1,6 @@
 package com.loperilla.onboarding_domain.di.login
 
-import com.loperilla.data.firebase.auth.FirebaseAuthRepository
-import com.loperilla.data.firebase.database.ShoppingListRepository
-import com.loperilla.onboarding_domain.usecase.DoLoginUseCase
-import com.loperilla.onboarding_domain.usecase.HomeUseCase
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
@@ -19,14 +14,14 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object LoginDependencyInjector {
-
-    @Provides
-    fun providesDoLoginUseCase(
-        firebaseAuth: FirebaseAuthRepository
-    ): DoLoginUseCase = DoLoginUseCase(firebaseAuth)
-
-    @Provides
-    fun providesHomeUseCase(
-        shoppingListRepository: ShoppingListRepository
-    ): HomeUseCase = HomeUseCase(shoppingListRepository)
+//
+//    @Provides
+//    fun providesDoLoginUseCase(
+//        firebaseAuth: FirebaseAuthRepository
+//    ): DoLoginUseCase = DoLoginUseCase(firebaseAuth)
+//
+//    @Provides
+//    fun providesHomeUseCase(
+//        shoppingListRepository: ShoppingListRepository
+//    ): HomeUseCase = HomeUseCase(shoppingListRepository)
 }

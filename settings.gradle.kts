@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "CompraCasa"
+rootProject.name = "ComposeAnime"
 include(":app")
 include(":core-ui")
 include(":data")

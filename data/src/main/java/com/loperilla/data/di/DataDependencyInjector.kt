@@ -1,12 +1,7 @@
 package com.loperilla.data.di
 
 import com.loperilla.data.datastore.DataStoreRepository
-import com.loperilla.data.firebase.auth.FirebaseAuthRepository
-import com.loperilla.data.firebase.database.IShoppingList
-import com.loperilla.data.firebase.database.ShoppingListRepository
 import com.loperilla.datasource.datastore.UserDataStoreDataSourceImpl
-import com.loperilla.datasource.firebase.auth.FirebaseAuthDataSourceImpl
-import com.loperilla.datasource.firebase.reference.CustomReference.SHOPPING_LIST_REFERENCE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,14 +21,4 @@ object DataDependencyInjector {
         userPref: UserDataStoreDataSourceImpl
     ): DataStoreRepository = DataStoreRepository(userPref)
 
-    @Provides
-    fun provideFirebaseAuth(
-        firebaseAuth: FirebaseAuthDataSourceImpl
-    ): FirebaseAuthRepository = FirebaseAuthRepository(firebaseAuth)
-
-    @Provides
-    fun provideShoppingListRepository(
-        shoppingListReference: SHOPPING_LIST_REFERENCE,
-        userPref: FirebaseAuthRepository
-    ): IShoppingList = ShoppingListRepository(shoppingListReference, userPref)
 }

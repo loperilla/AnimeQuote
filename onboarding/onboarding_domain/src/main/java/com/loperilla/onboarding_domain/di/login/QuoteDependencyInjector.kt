@@ -1,6 +1,9 @@
 package com.loperilla.onboarding_domain.di.login
 
+import com.loperilla.data.network.QuoteRepository
+import com.loperilla.onboarding_domain.usecase.QuoteUseCase
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
@@ -13,12 +16,13 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object LoginDependencyInjector {
-//
-//    @Provides
-//    fun providesDoLoginUseCase(
-//        firebaseAuth: FirebaseAuthRepository
-//    ): DoLoginUseCase = DoLoginUseCase(firebaseAuth)
+object QuoteDependencyInjector {
+
+    @Provides
+    fun providesDoLoginUseCase(
+        quoteRepository: QuoteRepository
+    ): QuoteUseCase = QuoteUseCase(quoteRepository)
+
 //
 //    @Provides
 //    fun providesHomeUseCase(

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "${MyConfiguration.baseProjectName}.core_ui"
+    namespace = "${MyConfiguration.myApplicationIdConfig}.core_ui"
     compileSdk = MyConfiguration.configCompileSdkVersion
 
     defaultConfig {

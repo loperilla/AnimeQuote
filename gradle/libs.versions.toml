@@ -4,6 +4,7 @@ androidx-lifecycle = "2.6.1"
 androidx-test-espresso = "3.5.1"
 hilt-version = "2.45"
 compose-compiler = "1.4.6"
+ktor-version = "1.5.0"
 
 [libraries]
 #Compose
@@ -25,6 +26,11 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:2.9.5"
 datastore = "androidx.datastore:datastore-preferences:1.0.0"
 
+ktor-client = { module = "io.ktor:ktor-client-android", version.ref = "ktor-version" }
+ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor-version" }
+ktor-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+ktor-logging = { module = "io.ktor:ktor-client-logging-jvm", version.ref = "ktor-version" }
+
 #crashlytics
 #auth
 #firestore
@@ -41,6 +47,7 @@ lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
 test-ext-junit = "androidx.test.ext:junit:1.1.5"
+kotlin-serialization = "org.jetbrains.kotlin:kotlin-serialization:1.5.0"
 
 [bundles]
 compose = [
@@ -55,6 +62,13 @@ compose = [
     "compose-ui-graphics",
     "lifecycle-compose-runtime",
     "lifecycle-compose-viewmodel",
+]
+
+ktor = [
+    "ktor-client",
+    "ktor-serialization",
+    "ktor-json",
+    "ktor-logging"
 ]
 
 

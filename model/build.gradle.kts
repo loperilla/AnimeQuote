@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "${MyConfiguration.baseProjectName}.model"
+    namespace = "${MyConfiguration.myApplicationIdConfig}.model"
     compileSdk = MyConfiguration.configCompileSdkVersion
 
     defaultConfig {

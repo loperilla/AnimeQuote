@@ -6,6 +6,7 @@ buildscript {
         classpath(libs.kotlin.gradle)
         classpath(libs.build.gradle)
         classpath(libs.hilt.gradle)
+        classpath(libs.kotlin.serialization)
     }
 }
 

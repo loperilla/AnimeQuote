@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "${MyConfiguration.baseProjectName}.data"
+    namespace = "${MyConfiguration.myApplicationIdConfig}.data"
     compileSdk = MyConfiguration.configCompileSdkVersion
 
     defaultConfig {

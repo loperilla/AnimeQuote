@@ -3,10 +3,11 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlinx-serialization")
 }
 
 android {
-    namespace = "${MyConfiguration.baseProjectName}.datasource"
+    namespace = "${MyConfiguration.myApplicationIdConfig}.datasource"
     compileSdk = MyConfiguration.configCompileSdkVersion
 
     defaultConfig {
@@ -44,5 +45,8 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    //ktor
+    implementation(libs.bundles.ktor)
 
 }

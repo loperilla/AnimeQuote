@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "${MyConfiguration.baseProjectName}.onboarding_presentation"
+    namespace = "${MyConfiguration.myApplicationIdConfig}.onboarding_presentation"
     compileSdk = MyConfiguration.configCompileSdkVersion
 
     defaultConfig {

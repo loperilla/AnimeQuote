@@ -1,7 +1,9 @@
 package com.loperilla.data.di
 
 import com.loperilla.data.datastore.DataStoreRepository
+import com.loperilla.data.network.QuoteRepository
 import com.loperilla.datasource.datastore.UserDataStoreDataSourceImpl
+import com.loperilla.datasource.network.api.QuoteApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,4 +23,8 @@ object DataDependencyInjector {
         userPref: UserDataStoreDataSourceImpl
     ): DataStoreRepository = DataStoreRepository(userPref)
 
+    @Provides
+    fun providesQuoteRepository(
+        quoteApi: QuoteApi
+    ): QuoteRepository = QuoteRepository(quoteApi)
 }

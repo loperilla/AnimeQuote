@@ -5,11 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.loperilla.model.quote.Quote
 import com.loperilla.model.result.CallResult
 import com.loperilla.model.ui.HomeState
+import com.loperilla.model.ui.HomeState.Loading
 import com.loperilla.onboarding_domain.usecase.QuoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,8 +26,8 @@ class HomeViewModel @Inject constructor(
     private val quoteUseCase: QuoteUseCase
 ) : ViewModel() {
 
-    private var _homeState: MutableStateFlow<HomeState> = MutableStateFlow(HomeState.Loading)
-    val homeState: StateFlow<HomeState> = _homeState
+    private var _homeState: MutableStateFlow<HomeState> = MutableStateFlow(Loading)
+    val homeState: StateFlow<HomeState> = _homeState.asStateFlow()
 
     fun getRandomQuotes() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -43,3 +45,4 @@ class HomeViewModel @Inject constructor(
         }
     }
 }
+

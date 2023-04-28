@@ -1,18 +1,27 @@
 package com.loperilla.datasource.di
 
-import android.content.Context
-import com.loperilla.datasource.datastore.IUserDataStoreDataSource
-import com.loperilla.datasource.datastore.UserDataStoreDataSourceImpl
+import android.util.Log
 import com.loperilla.datasource.network.api.QuoteApi
 import com.loperilla.datasource.network.impl.QuoteImpl
-import com.loperilla.datasource.network.ktorHttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.observer.ResponseObserver
+import io.ktor.client.request.header
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 import javax.inject.Singleton
+
 
 /*****
  * Project: CompraCasa
@@ -24,26 +33,51 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataSourceDependencyInjector {
-
-    @Singleton
     @Provides
-    fun providesPreferenceDataStore(
-        context: Context
-    ): IUserDataStoreDataSource = UserDataStoreDataSourceImpl(context)
-
     @Singleton
+    fun provideHttpClient(injectedJson: Json): HttpClient {
+        return HttpClient(Android) {
+            install(Logging) {
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        Log.v("Logger Ktor =>", message)
+                    }
+
+                }
+                level = LogLevel.ALL
+            }
+
+            install(ResponseObserver) {
+                onResponse { response ->
+                    Log.d("HTTP status:", "${response.status.value}")
+                }
+            }
+
+            install(DefaultRequest) {
+                header(HttpHeaders.ContentType, ContentType.Application.Json)
+            }
+
+            install(ContentNegotiation) {
+                json(
+                    injectedJson
+                )
+            }
+        }
+    }
+
     @Provides
-    fun provideContext(@ApplicationContext context: Context): Context {
-        return context
+    @Singleton
+    fun provideJson(): Json {
+        return Json {
+            ignoreUnknownKeys = true
+            prettyPrint = true
+        }
     }
 
     @Singleton
     @Provides
-    fun provideHttpClient(): HttpClient = ktorHttpClient
-
-    @Singleton
-    @Provides
     fun provideQuoteApi(
-        httpClient: HttpClient
-    ): QuoteApi = QuoteImpl(httpClient)
+        httpClient: HttpClient,
+        json: Json
+    ): QuoteApi = QuoteImpl(httpClient, json)
 }

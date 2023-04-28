@@ -42,9 +42,8 @@ object DataSourceDependencyInjector {
                     override fun log(message: String) {
                         Log.v("Logger Ktor =>", message)
                     }
-
                 }
-                level = LogLevel.ALL
+                level = LogLevel.INFO
             }
 
             install(ResponseObserver) {

@@ -4,9 +4,6 @@ import com.loperilla.datasource.model.QuoteNetwork
 import com.loperilla.datasource.network.KtorConstants.QUOTES
 import com.loperilla.datasource.network.api.QuoteApi
 import io.ktor.client.HttpClient
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.RedirectResponseException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
@@ -24,17 +21,18 @@ import javax.inject.Inject
 class QuoteImpl @Inject constructor(
     private val ktorClient: HttpClient,
     private val json: Json
-): QuoteApi {
-    override suspend fun getRandomQuotes(): Result<List<QuoteNetwork>> {
-        return runCatching {
-            val httpResponse: HttpResponse = ktorClient.get {
-                url(QUOTES.RANDOM)
-            }
-            json.decodeFromString(
-                ListSerializer(QuoteNetwork.serializer()),
-                httpResponse.bodyAsText()
-            )
+) : QuoteApi {
+    override suspend fun getRandomQuotes(): Result<List<QuoteNetwork>> = runCatching {
+        val httpResponse: HttpResponse = ktorClient.get {
+            url(QUOTES.RANDOM)
         }
+
+        json.decodeFromString(
+            ListSerializer(QuoteNetwork.serializer()),
+            httpResponse.bodyAsText()
+        )
+    }
+}
 //        catch(e: RedirectResponseException) {
 //            // 3xx - responses
 //            println("Error: ${e.response.status.description}")
@@ -51,5 +49,5 @@ class QuoteImpl @Inject constructor(
 //            println("Error: ${e.message}")
 //            Response.Exception(e.message?: "Excepción genérica")
 //        }
-    }
-}
+
+

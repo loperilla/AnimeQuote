@@ -7,6 +7,7 @@ package com.loperilla.core_ui.routes
  * All rights reserved 2023
  */
 object Routes {
-    const val LOGIN = "login"
     const val HOME = "home"
+    const val ANIME = "anime"
+    const val CHARACTER = "character"
 }

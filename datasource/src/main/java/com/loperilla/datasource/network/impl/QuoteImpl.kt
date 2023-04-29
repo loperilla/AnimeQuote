@@ -5,6 +5,7 @@ import com.loperilla.datasource.network.KtorConstants.QUOTES
 import com.loperilla.datasource.network.api.QuoteApi
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
@@ -32,7 +33,20 @@ class QuoteImpl @Inject constructor(
             httpResponse.bodyAsText()
         )
     }
+
+    override suspend fun getRandomQuotesByAnimeTitle(animeTitle: String): Result<List<QuoteNetwork>> = runCatching {
+        val httpResponse: HttpResponse = ktorClient.get {
+            url("${QUOTES.RANDOM}/anime")
+            parameter("title", animeTitle)
+        }
+
+        json.decodeFromString(
+            ListSerializer(QuoteNetwork.serializer()),
+            httpResponse.bodyAsText()
+        )
+    }
 }
+
 //        catch(e: RedirectResponseException) {
 //            // 3xx - responses
 //            println("Error: ${e.response.status.description}")

@@ -10,4 +10,5 @@ import com.loperilla.datasource.model.QuoteNetwork
  */
 interface QuoteApi {
     suspend fun getRandomQuotes(): Result<List<QuoteNetwork>>
+    suspend fun getRandomQuotesByAnimeTitle(animeTitle: String): Result<List<QuoteNetwork>>
 }

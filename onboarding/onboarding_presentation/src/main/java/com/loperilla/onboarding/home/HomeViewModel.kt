@@ -31,7 +31,7 @@ class HomeViewModel @Inject constructor(
 
     fun getRandomQuotes() {
         viewModelScope.launch(Dispatchers.IO) {
-            quoteUseCase.getRandomQuotes().collect { result: CallResult<List<Quote>> ->
+            quoteUseCase.getByAnimeTitle("one piece").collect { result: CallResult<List<Quote>> ->
                 when (result) {
                     is CallResult.Exception -> {
                         _homeState.value = HomeState.Error(result.errorMsg)

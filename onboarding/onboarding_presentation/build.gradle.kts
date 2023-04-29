@@ -52,7 +52,7 @@ dependencies {
     //Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
-    implementation(libs.hilt.navigation)
+//    implementation(libs.hilt.navigation)
 
     // Hilt
     implementation(libs.hilt.android)

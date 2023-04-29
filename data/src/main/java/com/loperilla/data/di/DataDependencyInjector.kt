@@ -1,13 +1,13 @@
 package com.loperilla.data.di
 
-import com.loperilla.data.datastore.DataStoreRepository
 import com.loperilla.data.network.QuoteRepository
-import com.loperilla.datasource.datastore.UserDataStoreDataSourceImpl
+import com.loperilla.datasource.di.IODispatcher
 import com.loperilla.datasource.network.api.QuoteApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 
 /*****
  * Project: CompraCasa
@@ -18,13 +18,10 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object DataDependencyInjector {
-    @Provides
-    fun providesDataStoreRepository(
-        userPref: UserDataStoreDataSourceImpl
-    ): DataStoreRepository = DataStoreRepository(userPref)
 
     @Provides
     fun providesQuoteRepository(
-        quoteApi: QuoteApi
-    ): QuoteRepository = QuoteRepository(quoteApi)
+        quoteApi: QuoteApi,
+        @IODispatcher dispatcher: CoroutineDispatcher
+    ): QuoteRepository = QuoteRepository(quoteApi, dispatcher)
 }

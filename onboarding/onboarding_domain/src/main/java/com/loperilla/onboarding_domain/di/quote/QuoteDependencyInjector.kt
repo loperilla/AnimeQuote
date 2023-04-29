@@ -1,4 +1,4 @@
-package com.loperilla.onboarding_domain.di.login
+package com.loperilla.onboarding_domain.di.quote
 
 import com.loperilla.data.network.QuoteRepository
 import com.loperilla.onboarding_domain.usecase.QuoteUseCase

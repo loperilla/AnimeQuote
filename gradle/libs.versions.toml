@@ -2,9 +2,10 @@
 androidx-activity = "1.7.1"
 androidx-lifecycle = "2.6.1"
 androidx-test-espresso = "3.5.1"
-hilt-version = "2.45"
 compose-compiler = "1.4.6"
-ktor-version = "1.5.0"
+hilt-version = "2.45"
+ktor-version = "2.3.0"
+org-jetbrains-kotlin = "1.8.20"
 
 [libraries]
 #Compose
@@ -23,31 +24,27 @@ compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
-crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:2.9.5"
 datastore = "androidx.datastore:datastore-preferences:1.0.0"
-
-ktor-client = { module = "io.ktor:ktor-client-android", version.ref = "ktor-version" }
-ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor-version" }
-ktor-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
-ktor-logging = { module = "io.ktor:ktor-client-logging-jvm", version.ref = "ktor-version" }
-
 #crashlytics
 #auth
 #firestore
-
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-version" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-version" }
 #Hilt
 hilt-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt-version" }
 hilt-navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
 junit = "junit:junit:4.13.2"
-kotlin-gradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20"
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin" }
+kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "org-jetbrains-kotlin" }
+ktor-client = { module = "io.ktor:ktor-client-android", version.ref = "ktor-version" }
+ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-version" }
+ktor-logging = { module = "io.ktor:ktor-client-logging-jvm", version.ref = "ktor-version" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
 lifecycle-compose-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
 lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
 test-ext-junit = "androidx.test.ext:junit:1.1.5"
-kotlin-serialization = "org.jetbrains.kotlin:kotlin-serialization:1.5.0"
 
 [bundles]
 compose = [
@@ -63,14 +60,12 @@ compose = [
     "lifecycle-compose-runtime",
     "lifecycle-compose-viewmodel",
 ]
-
 ktor = [
     "ktor-client",
-    "ktor-serialization",
     "ktor-json",
-    "ktor-logging"
+    "ktor-logging",
+    "ktor-client-serialization",
 ]
-
 
 [plugins]
 application = "com.android.application:8.0.0"
@@ -78,3 +73,4 @@ ben-manes-versions = "com.github.ben-manes.versions:0.46.0"
 kotlin-android = "org.jetbrains.kotlin.android:1.8.20"
 library = "com.android.library:8.0.0"
 version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.0"
+ktor-serialization = "org.jetbrains.kotlin.plugin.serialization:1.5.0"

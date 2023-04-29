@@ -1,7 +1,6 @@
 package com.loperilla.datasource.network.api
 
 import com.loperilla.datasource.model.QuoteNetwork
-import com.loperilla.datasource.network.Response
 
 /*****
  * Project: ComposeAnime
@@ -10,5 +9,6 @@ import com.loperilla.datasource.network.Response
  * All rights reserved 2023
  */
 interface QuoteApi {
-    suspend fun getRandomQuotes(): Response<List<QuoteNetwork>>
+    suspend fun getRandomQuotes(): Result<List<QuoteNetwork>>
+    suspend fun getRandomQuotesByAnimeTitle(animeTitle: String): Result<List<QuoteNetwork>>
 }

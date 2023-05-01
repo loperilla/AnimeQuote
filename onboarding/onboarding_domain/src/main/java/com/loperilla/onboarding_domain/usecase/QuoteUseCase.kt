@@ -18,4 +18,7 @@ class QuoteUseCase @Inject constructor(
     suspend fun getRandomQuotes(): Flow<CallResult<List<Quote>>> = quoteRepository.getRandomQuotes()
     suspend fun getByAnimeTitle(title: String): Flow<CallResult<List<Quote>>> =
         quoteRepository.getQuotesByAnimeTitle(title)
+
+    suspend fun getByCharacterName(name: String): Flow<CallResult<List<Quote>>> =
+        quoteRepository.getQuotesByCharacterName(name)
 }

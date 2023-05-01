@@ -48,4 +48,18 @@ class QuoteRepository @Inject constructor(
             ))
         }
     }.flowOn(dispatcher)
+
+    suspend fun getQuotesByCharacterName(name: String): Flow<CallResult<List<Quote>>> = flow {
+        val result: Result<List<QuoteNetwork>> = quoteApi.getRandomQuotesByCharacter(name)
+        if (result.isFailure || result.getOrNull().isNullOrEmpty()) {
+            emit(CallResult.Exception("Nulo o vacío"))
+        } else {
+            val networkQuoteList: List<QuoteNetwork> = result.getOrThrow()
+            emit(CallResult.Success(
+                networkQuoteList.map {
+                    it.toDomain()
+                }
+            ))
+        }
+    }.flowOn(dispatcher)
 }

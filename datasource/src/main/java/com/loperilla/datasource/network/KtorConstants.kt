@@ -11,7 +11,8 @@ object KtorConstants {
 
     object QUOTES {
         const val RANDOM = "$BASE_URL/quotes"
-        const val BY_ANIME_TITLE = "$BASE_URL/quotes"
+        const val BY_ANIME_TITLE = "$RANDOM/anime"
+        const val BY_CHARACTER = "$RANDOM/character"
     }
 
     object AVAILABLE {

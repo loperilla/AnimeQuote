@@ -3,11 +3,8 @@ package com.loperilla.composeanime
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,7 +15,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -34,8 +30,10 @@ import com.loperilla.core_ui.routes.Routes.ANIME
 import com.loperilla.core_ui.routes.Routes.CHARACTER
 import com.loperilla.core_ui.routes.Routes.HOME
 import com.loperilla.onboarding.anime.AnimeScreen
-import com.loperilla.onboarding.anime.SearchAnimeViewModel
+import com.loperilla.onboarding.anime.AnimeViewModel
 import com.loperilla.onboarding.bottomnav.BottomNavigationBar
+import com.loperilla.onboarding.character.CharacterScreen
+import com.loperilla.onboarding.character.CharacterViewModel
 import com.loperilla.onboarding.home.HomeScreen
 import com.loperilla.onboarding.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,15 +91,33 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(CHARACTER) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(Color.Red)
-                            )
+                            val animeViewModel = hiltViewModel<CharacterViewModel>()
+                            val characterState by animeViewModel.characterState.collectAsStateWithLifecycle()
+                            val currentInputValue by animeViewModel.searchText.collectAsStateWithLifecycle()
+                            val characterList by animeViewModel.characterList.collectAsStateWithLifecycle()
+                            val isSearching by animeViewModel.isSearching.collectAsStateWithLifecycle()
+                            Column {
+                                SearchField(
+                                    textValue = currentInputValue,
+                                    placeHolderText = "Search your anime",
+                                    onTextChange = animeViewModel::onSearchTextChange,
+                                    isInputFocusedListener = animeViewModel::onInputFocused
+                                )
+                                Spacer(modifier = Modifier.height(LOW))
+                                CharacterScreen(
+                                    modifier = Modifier
+                                        .weight(1f),
+                                    characterState = characterState,
+                                    characterList,
+                                    isSearching,
+                                    onLoadingState = animeViewModel::getAllCharacter,
+                                    onSelectCharacter = animeViewModel::selectCharacter
+                                )
+                            }
                         }
 
                         composable(ANIME) {
-                            val animeViewModel = hiltViewModel<SearchAnimeViewModel>()
+                            val animeViewModel = hiltViewModel<AnimeViewModel>()
                             val animeState by animeViewModel.animeState.collectAsStateWithLifecycle()
                             val currentInputValue by animeViewModel.searchText.collectAsStateWithLifecycle()
                             val animeList by animeViewModel.animeList.collectAsStateWithLifecycle()

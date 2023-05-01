@@ -36,8 +36,20 @@ class QuoteImpl @Inject constructor(
 
     override suspend fun getRandomQuotesByAnimeTitle(animeTitle: String): Result<List<QuoteNetwork>> = runCatching {
         val httpResponse: HttpResponse = ktorClient.get {
-            url("${QUOTES.RANDOM}/anime")
+            url(QUOTES.BY_ANIME_TITLE)
             parameter("title", animeTitle)
+        }
+
+        json.decodeFromString(
+            ListSerializer(QuoteNetwork.serializer()),
+            httpResponse.bodyAsText()
+        )
+    }
+
+    override suspend fun getRandomQuotesByCharacter(name: String): Result<List<QuoteNetwork>> = runCatching {
+        val httpResponse: HttpResponse = ktorClient.get {
+            url(QUOTES.BY_CHARACTER)
+            parameter("name", name)
         }
 
         json.decodeFromString(

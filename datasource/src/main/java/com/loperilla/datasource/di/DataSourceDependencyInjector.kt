@@ -1,11 +1,15 @@
 package com.loperilla.datasource.di
 
+import android.content.Context
 import android.util.Log
+import com.loperilla.datasource.network.api.AnimeApi
 import com.loperilla.datasource.network.api.QuoteApi
+import com.loperilla.datasource.network.impl.AnimeImpl
 import com.loperilla.datasource.network.impl.QuoteImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -79,4 +83,18 @@ object DataSourceDependencyInjector {
         httpClient: HttpClient,
         json: Json
     ): QuoteApi = QuoteImpl(httpClient, json)
+
+    @Singleton
+    @Provides
+    fun provideAnimeApi(
+        httpClient: HttpClient,
+        json: Json
+    ): AnimeApi = AnimeImpl(httpClient, json)
+
+
+    @Provides
+    @Singleton
+    fun provideApplicationContext(
+        @ApplicationContext context: Context
+    ): Context = context
 }

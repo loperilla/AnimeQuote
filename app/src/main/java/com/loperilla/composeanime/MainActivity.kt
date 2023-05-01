@@ -5,7 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -25,9 +28,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.loperilla.core_ui.ComposeAnimeTheme
+import com.loperilla.core_ui.LOW
+import com.loperilla.core_ui.input.SearchField
 import com.loperilla.core_ui.routes.Routes.ANIME
 import com.loperilla.core_ui.routes.Routes.CHARACTER
 import com.loperilla.core_ui.routes.Routes.HOME
+import com.loperilla.onboarding.anime.AnimeScreen
+import com.loperilla.onboarding.anime.SearchAnimeViewModel
 import com.loperilla.onboarding.bottomnav.BottomNavigationBar
 import com.loperilla.onboarding.home.HomeScreen
 import com.loperilla.onboarding.home.HomeViewModel
@@ -94,11 +101,29 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(ANIME) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(Color.Green)
-                            )
+                            val animeViewModel = hiltViewModel<SearchAnimeViewModel>()
+                            val animeState by animeViewModel.animeState.collectAsStateWithLifecycle()
+                            val currentInputValue by animeViewModel.searchText.collectAsStateWithLifecycle()
+                            val animeList by animeViewModel.animeList.collectAsStateWithLifecycle()
+                            val isSearching by animeViewModel.isSearching.collectAsStateWithLifecycle()
+                            Column {
+                                SearchField(
+                                    textValue = currentInputValue,
+                                    placeHolderText = "Search your anime",
+                                    onTextChange = animeViewModel::onSearchTextChange,
+                                    isInputFocusedListener = animeViewModel::onInputFocused
+                                )
+                                Spacer(modifier = Modifier.height(LOW))
+                                AnimeScreen(
+                                    modifier = Modifier
+                                        .weight(1f),
+                                    animeState = animeState,
+                                    animeList,
+                                    isSearching,
+                                    onLoadingState = animeViewModel::getAllAnime,
+                                    onSelectAnime = animeViewModel::selectAnime
+                                )
+                            }
                         }
                     }
                 }

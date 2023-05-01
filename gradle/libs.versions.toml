@@ -6,6 +6,7 @@ compose-compiler = "1.4.6"
 hilt-version = "2.45"
 ktor-version = "2.3.0"
 org-jetbrains-kotlin = "1.8.20"
+room-version = "2.5.1"
 
 [libraries]
 #Compose
@@ -37,12 +38,15 @@ junit = "junit:junit:4.13.2"
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "org-jetbrains-kotlin" }
 ktor-client = { module = "io.ktor:ktor-client-android", version.ref = "ktor-version" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
 ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-version" }
 ktor-logging = { module = "io.ktor:ktor-client-logging-jvm", version.ref = "ktor-version" }
-ktor-client-serialization = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
 lifecycle-compose-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
 lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-version" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-version" }
 test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
 test-ext-junit = "androidx.test.ext:junit:1.1.5"
 
@@ -62,15 +66,15 @@ compose = [
 ]
 ktor = [
     "ktor-client",
+    "ktor-client-serialization",
     "ktor-json",
     "ktor-logging",
-    "ktor-client-serialization",
 ]
 
 [plugins]
 application = "com.android.application:8.0.0"
 ben-manes-versions = "com.github.ben-manes.versions:0.46.0"
 kotlin-android = "org.jetbrains.kotlin.android:1.8.20"
+ktor-serialization = "org.jetbrains.kotlin.plugin.serialization:1.8.20"
 library = "com.android.library:8.0.0"
 version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.0"
-ktor-serialization = "org.jetbrains.kotlin.plugin.serialization:1.5.0"

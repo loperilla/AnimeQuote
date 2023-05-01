@@ -5,7 +5,7 @@ import com.loperilla.onboarding_domain.usecase.QuoteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
 
 /*****
  * Project: CompraCasa
@@ -15,17 +15,11 @@ import dagger.hilt.components.SingletonComponent
  */
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 object QuoteDependencyInjector {
 
     @Provides
     fun providesDoLoginUseCase(
         quoteRepository: QuoteRepository
     ): QuoteUseCase = QuoteUseCase(quoteRepository)
-
-//
-//    @Provides
-//    fun providesHomeUseCase(
-//        shoppingListRepository: ShoppingListRepository
-//    ): HomeUseCase = HomeUseCase(shoppingListRepository)
 }

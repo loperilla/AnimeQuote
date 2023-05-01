@@ -33,7 +33,7 @@ import kotlin.time.Duration.Companion.seconds
  */
 @HiltViewModel
 @OptIn(FlowPreview::class)
-class SearchAnimeViewModel @Inject constructor(
+class AnimeViewModel @Inject constructor(
     private val getAllAnimeUseCase: GetAllAnimeUseCase,
     private val quoteUseCase: QuoteUseCase
 ) : ViewModel() {

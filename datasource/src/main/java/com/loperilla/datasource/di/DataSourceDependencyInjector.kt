@@ -3,8 +3,10 @@ package com.loperilla.datasource.di
 import android.content.Context
 import android.util.Log
 import com.loperilla.datasource.network.api.AnimeApi
+import com.loperilla.datasource.network.api.CharactersApi
 import com.loperilla.datasource.network.api.QuoteApi
 import com.loperilla.datasource.network.impl.AnimeImpl
+import com.loperilla.datasource.network.impl.CharactersImpl
 import com.loperilla.datasource.network.impl.QuoteImpl
 import dagger.Module
 import dagger.Provides
@@ -90,6 +92,13 @@ object DataSourceDependencyInjector {
         httpClient: HttpClient,
         json: Json
     ): AnimeApi = AnimeImpl(httpClient, json)
+
+    @Singleton
+    @Provides
+    fun provideCharacterApi(
+        httpClient: HttpClient,
+        json: Json
+    ): CharactersApi = CharactersImpl(httpClient, json)
 
 
     @Provides

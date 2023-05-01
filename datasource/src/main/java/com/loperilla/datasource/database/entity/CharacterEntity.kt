@@ -13,6 +13,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class CharacterEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long? = null,
     val name: String
 )

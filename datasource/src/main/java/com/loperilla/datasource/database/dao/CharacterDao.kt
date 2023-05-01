@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CharacterDao {
     @Query("SELECT * FROM CharacterEntity")
-    fun getAllAnime(): Flow<List<CharacterEntity>>
+    fun getAllCharacter(): Flow<List<CharacterEntity>>
 
     @Query("SELECT * FROM CharacterEntity WHERE name LIKE '%' || :filterName || '%'")
     fun getAnimeByName(filterName: String): Flow<List<CharacterEntity>>

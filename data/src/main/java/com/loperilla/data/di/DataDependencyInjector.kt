@@ -1,10 +1,13 @@
 package com.loperilla.data.di
 
 import com.loperilla.data.combined.anime.AnimeRepository
+import com.loperilla.data.combined.character.CharacterRepository
 import com.loperilla.data.network.QuoteRepository
 import com.loperilla.datasource.database.dao.AnimeDao
+import com.loperilla.datasource.database.dao.CharacterDao
 import com.loperilla.datasource.di.IODispatcher
 import com.loperilla.datasource.network.api.AnimeApi
+import com.loperilla.datasource.network.api.CharactersApi
 import com.loperilla.datasource.network.api.QuoteApi
 import dagger.Module
 import dagger.Provides
@@ -33,4 +36,10 @@ object DataDependencyInjector {
         animeApi: AnimeApi,
         animeDao: AnimeDao
     ): AnimeRepository = AnimeRepository(animeApi, animeDao)
+
+    @Provides
+    fun provideCharacterRepository(
+        characterApi: CharactersApi,
+        characterDao: CharacterDao
+    ): CharacterRepository = CharacterRepository(characterApi, characterDao)
 }

@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.sp
 import com.loperilla.core_ui.LOW
 import com.loperilla.model.quote.Anime
@@ -18,12 +21,17 @@ import com.loperilla.model.quote.Anime
  * All rights reserved 2023
  */
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchAnime(
     modifier: Modifier = Modifier,
     animeList: List<Anime>,
     onSelectedAnime: (Anime) -> Unit
 ) {
+    val controller =
+        LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
@@ -38,6 +46,8 @@ fun SearchAnime(
                     .padding(LOW)
                     .clickable {
                         onSelectedAnime(animeList[it])
+                        controller?.hide()
+                        focusManager.clearFocus(true)
                     }
             )
         }

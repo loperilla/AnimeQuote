@@ -32,7 +32,12 @@ class AnimeRepository @Inject constructor(
     private suspend fun getAllNetworkAnimeName() {
         val networkResultAnimeList: Result<List<String>> = animeApi.getAllAnime()
         if (networkResultAnimeList.isSuccess) {
-            val list: List<String> = networkResultAnimeList.getOrThrow()
+            val list: List<String> = networkResultAnimeList
+                .getOrThrow()
+                .distinct()
+                .filter {
+                    it.isNotBlank()
+                }
 
             animeDao.addAnimeList(
                 animeList = list.map { animeName ->

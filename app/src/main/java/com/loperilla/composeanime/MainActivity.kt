@@ -110,7 +110,8 @@ class MainActivity : ComponentActivity() {
                                 SearchField(
                                     textValue = currentInputValue,
                                     placeHolderText = "Search your anime",
-                                    onTextChange = animeViewModel::onSearchTextChange
+                                    onTextChange = animeViewModel::onSearchTextChange,
+                                    isInputFocusedListener = animeViewModel::onInputFocused
                                 )
                                 Spacer(modifier = Modifier.height(LOW))
                                 AnimeScreen(

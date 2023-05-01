@@ -10,6 +10,9 @@ data class Anime(
     val name: String
 ) {
     fun doesMatchSearchQuery(query: String): Boolean {
+        name.ifEmpty {
+            return false
+        }
         val matchingCombinations = listOf(
             name,
             name.first(),

@@ -98,8 +98,20 @@ class SearchAnimeViewModel @Inject constructor(
                 when (result) {
                     is CallResult.Exception -> TODO()
                     is CallResult.Success -> {
-
+                        _animeState.update {
+                            AnimeState.ResultSearch(result.data ?: emptyList())
+                        }
                     }
+                }
+            }
+        }
+    }
+
+    fun onInputFocused(isInputFocused: Boolean) {
+        if (isInputFocused) {
+            viewModelScope.launch(Dispatchers.IO) {
+                _animeState.update {
+                    AnimeState.AnimeView
                 }
             }
         }

@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.loperilla.model.quote.Anime
 import com.loperilla.model.ui.AnimeState
+import com.loperilla.onboarding.common.QuoteList
 
 /*****
  * Project: ComposeAnime
@@ -37,7 +38,9 @@ fun AnimeScreen(
                 SearchAnime(
                     modifier = modifier,
                     animeList = animeList,
-                    onSelectedAnime = onSelectAnime
+                    onSelectedAnime = {
+                        onSelectAnime(it)
+                    }
                 )
             }
         }
@@ -47,7 +50,10 @@ fun AnimeScreen(
         }
 
         is AnimeState.ResultSearch -> {
-
+            QuoteList(
+                modifier,
+                animeState.resultList
+            )
         }
     }
 }

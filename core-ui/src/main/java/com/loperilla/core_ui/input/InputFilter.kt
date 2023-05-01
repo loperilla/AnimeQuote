@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import com.loperilla.core_ui.LOW
-import com.loperilla.core_ui.previews.PIXEL_33_NIGHT
 
 /*****
  * Project: ComposeAnime
@@ -30,6 +29,7 @@ fun SearchField(
     modifier: Modifier = Modifier,
     textValue: String,
     onTextChange: (String) -> Unit,
+    isInputFocusedListener: (Boolean) -> Unit,
     placeHolderText: String
 ) {
     var isInputFocused by rememberSaveable { mutableStateOf(false) }
@@ -51,6 +51,7 @@ fun SearchField(
             .padding(LOW)
             .onFocusChanged {
                 isInputFocused = it.isFocused
+                isInputFocusedListener(it.isFocused)
             },
         placeholder = {
             Text(text = placeHolderText)
@@ -65,18 +66,6 @@ fun SearchField(
                     Color.Green
                 }
             )
-        }
-    )
-}
-
-@PIXEL_33_NIGHT
-@Composable
-fun SearchFieldPreview() {
-    SearchField(
-        textValue = "",
-        placeHolderText = "hola",
-        onTextChange = {
-
         }
     )
 }

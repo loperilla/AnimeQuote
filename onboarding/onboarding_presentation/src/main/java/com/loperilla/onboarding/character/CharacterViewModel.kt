@@ -6,8 +6,8 @@ import com.loperilla.model.quote.Character
 import com.loperilla.model.quote.Quote
 import com.loperilla.model.result.CallResult
 import com.loperilla.model.ui.CharacterState
-import com.loperilla.onboarding_domain.usecase.QuoteUseCase
 import com.loperilla.onboarding_domain.usecase.character.GetAllCharactersUseCase
+import com.loperilla.onboarding_domain.usecase.quote.QuoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview

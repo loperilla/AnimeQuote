@@ -26,6 +26,8 @@ compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 datastore = "androidx.datastore:datastore-preferences:1.0.0"
+paging-runtime = "androidx.paging:paging-runtime-ktx:3.1.1"
+paging-compose = "androidx.paging:paging-compose:1.0.0-alpha18"
 #crashlytics
 #auth
 #firestore
@@ -69,6 +71,11 @@ ktor = [
     "ktor-client-serialization",
     "ktor-json",
     "ktor-logging",
+]
+
+paging = [
+    "paging-compose",
+    "paging-runtime"
 ]
 
 [plugins]

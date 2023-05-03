@@ -1,5 +1,7 @@
 package com.loperilla.datasource.model
 
+import com.loperilla.datasource.database.entity.QuoteEntity
+import com.loperilla.model.interfaces.IRemoteResponse
 import com.loperilla.model.quote.Quote
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -18,10 +20,17 @@ data class QuoteNetwork(
     val character: String,
     @SerialName("quote")
     val quote: String
-)
+) : IRemoteResponse<QuoteEntity, Quote>() {
+    override fun toEntity(): QuoteEntity =
+        QuoteEntity(
+            anime = this.anime,
+            quote = this.quote,
+            character = this.character
+        )
 
-fun QuoteNetwork.toDomain(): Quote {
-    return Quote(
-        anime, character, quote
+    override fun toDomain(): Quote = Quote(
+        anime = this.anime,
+        character = this.character,
+        quote = quote
     )
 }

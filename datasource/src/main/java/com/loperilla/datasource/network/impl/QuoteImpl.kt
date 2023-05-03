@@ -23,9 +23,10 @@ class QuoteImpl @Inject constructor(
     private val ktorClient: HttpClient,
     private val json: Json
 ) : QuoteApi {
-    override suspend fun getRandomQuotes(): Result<List<QuoteNetwork>> = runCatching {
+    override suspend fun getRandomQuotes(page: Int): Result<List<QuoteNetwork>> = runCatching {
         val httpResponse: HttpResponse = ktorClient.get {
             url(QUOTES.RANDOM)
+            parameter("pages", "$page")
         }
 
         json.decodeFromString(

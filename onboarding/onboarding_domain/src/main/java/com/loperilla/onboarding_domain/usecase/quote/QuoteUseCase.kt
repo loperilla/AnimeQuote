@@ -1,4 +1,4 @@
-package com.loperilla.onboarding_domain.usecase
+package com.loperilla.onboarding_domain.usecase.quote
 
 import com.loperilla.data.network.QuoteRepository
 import com.loperilla.model.quote.Quote
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class QuoteUseCase @Inject constructor(
     private val quoteRepository: QuoteRepository
 ) {
-    suspend fun getRandomQuotes(): Flow<CallResult<List<Quote>>> = quoteRepository.getRandomQuotes()
+    //    suspend fun getRandomQuotes(): Flow<CallResult<List<Quote>>> = quoteRepository.getRandomQuotes()
     suspend fun getByAnimeTitle(title: String): Flow<CallResult<List<Quote>>> =
         quoteRepository.getQuotesByAnimeTitle(title)
 

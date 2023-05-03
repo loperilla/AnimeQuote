@@ -1,7 +1,6 @@
 package com.loperilla.data.network
 
 import com.loperilla.datasource.model.QuoteNetwork
-import com.loperilla.datasource.model.toDomain
 import com.loperilla.datasource.network.api.QuoteApi
 import com.loperilla.model.quote.Quote
 import com.loperilla.model.result.CallResult
@@ -21,19 +20,21 @@ class QuoteRepository @Inject constructor(
     private val quoteApi: QuoteApi,
     private val dispatcher: CoroutineDispatcher
 ) {
-    suspend fun getRandomQuotes(): Flow<CallResult<List<Quote>>> = flow {
-        val result: Result<List<QuoteNetwork>> = quoteApi.getRandomQuotes()
-        if (result.isFailure || result.getOrNull().isNullOrEmpty()) {
-            emit(CallResult.Exception("Nulo o vacío"))
-        } else {
-            val networkQuoteList: List<QuoteNetwork> = result.getOrThrow()
-            emit(CallResult.Success(
-                networkQuoteList.map {
-                    it.toDomain()
-                }
-            ))
-        }
-    }.flowOn(dispatcher)
+
+    // QuotePagingSource
+//    suspend fun getRandomQuotes(): Flow<CallResult<List<Quote>>> = flow {
+//        val result: Result<List<QuoteNetwork>> = quoteApi.getRandomQuotes()
+//        if (result.isFailure || result.getOrNull().isNullOrEmpty()) {
+//            emit(CallResult.Exception("Nulo o vacío"))
+//        } else {
+//            val networkQuoteList: List<QuoteNetwork> = result.getOrThrow()
+//            emit(CallResult.Success(
+//                networkQuoteList.map {
+//                    it.toDomain()
+//                }
+//            ))
+//        }
+//    }.flowOn(dispatcher)
 
     suspend fun getQuotesByAnimeTitle(title: String): Flow<CallResult<List<Quote>>> = flow {
         val result: Result<List<QuoteNetwork>> = quoteApi.getRandomQuotesByAnimeTitle(title)
@@ -41,9 +42,10 @@ class QuoteRepository @Inject constructor(
             emit(CallResult.Exception("Nulo o vacío"))
         } else {
             val networkQuoteList: List<QuoteNetwork> = result.getOrThrow()
-            emit(CallResult.Success(
-                networkQuoteList.map {
-                    it.toDomain()
+            emit(
+                CallResult.Success(
+                    networkQuoteList.map {
+                        it.toDomain()
                 }
             ))
         }

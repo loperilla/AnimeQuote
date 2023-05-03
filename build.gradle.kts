@@ -4,7 +4,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 buildscript {
     dependencies {
         classpath(libs.kotlin.gradle)
-        classpath(libs.build.gradle)
+        classpath("com.android.tools.build:gradle:8.0.1")
         classpath(libs.hilt.gradle)
         classpath(libs.kotlin.serialization)
     }

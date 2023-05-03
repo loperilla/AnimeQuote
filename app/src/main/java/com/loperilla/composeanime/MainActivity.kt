@@ -23,6 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.*
 import com.loperilla.core_ui.ComposeAnimeTheme
 import com.loperilla.core_ui.LOW
 import com.loperilla.core_ui.input.SearchField
@@ -82,11 +83,10 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(HOME) {
                             val homeViewModel = hiltViewModel<HomeViewModel>()
-                            val homeState by homeViewModel.homeState.collectAsStateWithLifecycle()
 
+                            val randomQuotes = homeViewModel.getPagingQuotes().collectAsLazyPagingItems()
                             HomeScreen(
-                                homeState,
-                                homeViewModel::getRandomQuotes
+                                randomQuotes
                             )
                         }
 

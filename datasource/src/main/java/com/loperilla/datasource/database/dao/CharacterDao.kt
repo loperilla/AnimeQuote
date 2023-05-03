@@ -1,8 +1,8 @@
 package com.loperilla.datasource.database.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Upsert
 import com.loperilla.datasource.database.entity.CharacterEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -20,6 +20,6 @@ interface CharacterDao {
     @Query("SELECT * FROM CharacterEntity WHERE name LIKE '%' || :filterName || '%'")
     fun getAnimeByName(filterName: String): Flow<List<CharacterEntity>>
 
-    @Insert
+    @Upsert
     fun addAnimeList(characterList: List<CharacterEntity>): LongArray
 }

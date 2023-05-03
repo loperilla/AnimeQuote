@@ -48,6 +48,9 @@ dependencies {
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)
 
+    // Paging
+    implementation(libs.bundles.paging)
+
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

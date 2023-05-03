@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.loperilla.datasource.database.AnimeDatabase
 import com.loperilla.datasource.database.dao.AnimeDao
 import com.loperilla.datasource.database.dao.CharacterDao
+import com.loperilla.datasource.database.dao.QuoteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,5 +44,10 @@ object RoomModule {
     fun provideCharacterDao(
         animeDatabase: AnimeDatabase
     ): CharacterDao = animeDatabase.characterDao()
+
+    @Provides
+    fun provideQuoteDao(
+        animeDatabase: AnimeDatabase
+    ): QuoteDao = animeDatabase.quoteDao()
 
 }

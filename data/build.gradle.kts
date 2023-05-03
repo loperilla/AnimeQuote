@@ -45,12 +45,14 @@ android {
 dependencies {
     implementation(project(MyConfiguration.MAP_MODULES.DATASOURCE))
     implementation(project(MyConfiguration.MAP_MODULES.MODEL))
-    //Compose
+    // Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
-    //Datastore
+    // Paging
+    implementation(libs.bundles.paging)
+    // Datastore
     implementation(libs.datastore)
-    //Hilt
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 

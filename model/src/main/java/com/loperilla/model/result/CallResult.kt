@@ -7,6 +7,6 @@ package com.loperilla.model.result
  * All rights reserved 2023
  */
 sealed class CallResult<T> {
-    data class Success<T>(val data: T?): CallResult<T>()
-    data class Exception<T>(val errorMsg: String): CallResult<T>()
+    data class Success<T>(val data: T?) : CallResult<T>()
+    data class Exception<T>(val errorType: ErrorType) : CallResult<T>()
 }

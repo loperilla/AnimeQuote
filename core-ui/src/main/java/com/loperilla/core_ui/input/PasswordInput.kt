@@ -13,10 +13,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -38,9 +42,10 @@ fun PasswordInput(
     onValueChange: (String) -> Unit
 ) {
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
-    val colors = TextFieldDefaults.textFieldColors(
-        textColor = Color(0xFF636262),
-        containerColor = Color(0xFFDEDDDD),
+    val colors = TextFieldDefaults.colors(
+        focusedContainerColor = Color(0xFFDEDDDD),
+        unfocusedContainerColor = Color(0xFFDEDDDD),
+        disabledContainerColor = Color(0xFFDEDDDD),
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent
     )
@@ -51,6 +56,9 @@ fun PasswordInput(
         value = inputValue,
         maxLines = 1,
         singleLine = true,
+        textStyle = TextStyle(
+            color = Color(0xFF636262)
+        ),
         colors = colors,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         placeholder = {

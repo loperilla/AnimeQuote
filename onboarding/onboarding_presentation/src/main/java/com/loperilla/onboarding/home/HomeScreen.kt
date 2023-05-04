@@ -57,8 +57,7 @@ fun QuotePagingList(
         modifier = modifier
     ) {
         items(
-            quoteList,
-            key = { it.hashCode() }
+            items = quoteList
         ) { quote ->
             if (quote != null) {
                 QuoteItem(quote)

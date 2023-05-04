@@ -9,11 +9,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import com.loperilla.core_ui.LOW
 
 /*****
@@ -33,9 +37,10 @@ fun SearchField(
     placeHolderText: String
 ) {
     var isInputFocused by rememberSaveable { mutableStateOf(false) }
-    val colors = TextFieldDefaults.textFieldColors(
-        textColor = Color(0xFF636262),
-        containerColor = Color(0xFFF5F5F5),
+    val colors = TextFieldDefaults.colors(
+        focusedContainerColor = Color(0xFFDEDDDD),
+        unfocusedContainerColor = Color(0xFFDEDDDD),
+        disabledContainerColor = Color(0xFFDEDDDD),
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent
     )
@@ -46,6 +51,9 @@ fun SearchField(
         onValueChange = {
             onTextChange(it)
         },
+        textStyle = TextStyle(
+            color = Color(0xFF636262)
+        ),
         modifier = modifier
             .fillMaxWidth()
             .padding(LOW)

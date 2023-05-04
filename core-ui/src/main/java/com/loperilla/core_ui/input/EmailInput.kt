@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -16,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import com.loperilla.core_ui.LOW
 
@@ -26,7 +26,6 @@ import com.loperilla.core_ui.LOW
  * All rights reserved 2023
  */
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailInput(
     inputValue: String,
@@ -52,9 +51,13 @@ fun EmailInput(
         onValueChange = {
             onValueChange(it)
         },
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = Color(0xFF636262),
-            containerColor = Color(0xFFDEDDDD),
+        textStyle = TextStyle(
+            color = Color(0xFF636262)
+        ),
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color(0xFFDEDDDD),
+            unfocusedContainerColor = Color(0xFFDEDDDD),
+            disabledContainerColor = Color(0xFFDEDDDD),
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         )

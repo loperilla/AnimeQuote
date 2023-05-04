@@ -6,6 +6,8 @@ import com.loperilla.datasource.database.dao.QuoteDao
 import com.loperilla.datasource.model.QuoteNetwork
 import com.loperilla.datasource.network.api.QuoteApi
 import com.loperilla.model.quote.Quote
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
@@ -27,32 +29,46 @@ class QuotePagingSource @Inject constructor(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Quote> {
-        return try {
+        return withContext(Dispatchers.IO) {
             val currentPage = params.key ?: 0
-            val result: Result<List<QuoteNetwork>> = api.getRandomQuotes(currentPage)
-            if (result.isFailure) {
-                LoadResult.Error(result.exceptionOrNull() ?: IOException("yoqse"))
-            } else {
-                val networkQuoteList: List<QuoteNetwork> = result.getOrElse {
-                    emptyList()
-                }
-                quoteDao.addAnimeList(
-                    networkQuoteList.map {
-                        it.toEntity()
+            try {
+                val result: Result<List<QuoteNetwork>> = api.getRandomQuotes(currentPage)
+                if (result.isFailure) {
+                    LoadResult.Error(result.exceptionOrNull() ?: IOException("yoqse"))
+                } else {
+                    val networkQuoteList: List<QuoteNetwork> = result.getOrElse {
+                        emptyList()
                     }
-                )
+                    quoteDao.addAnimeList(
+                        networkQuoteList.map {
+                            it.toEntity()
+                        }
+                    )
 
-                LoadResult.Page(
-                    data = quoteDao.getAllQuotes().map {
-                        it.toDomain()
-                    },
-                    prevKey = if (currentPage == 0) null else currentPage.minus(1),
-                    nextKey = if (networkQuoteList.isEmpty()) null else currentPage.plus(1)
-                )
+                    LoadResult.Page(
+                        data = quoteDao.getAllQuotes().map {
+                            it.toDomain()
+                        },
+                        prevKey = if (currentPage == 0) null else currentPage.minus(1),
+                        nextKey = if (networkQuoteList.isEmpty()) null else currentPage.plus(1)
+                    )
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                val cachedList = quoteDao.getAllQuotes()
+                if (cachedList.isEmpty()) {
+                    LoadResult.Error(e)
+                } else {
+                    LoadResult.Page(
+                        data = cachedList.map {
+                            it.toDomain()
+                        },
+                        prevKey = if (currentPage == 0) null else currentPage.minus(1),
+                        nextKey = if (cachedList.isEmpty()) null else currentPage.plus(1)
+                    )
+                }
             }
-
-        } catch (e: Exception) {
-            LoadResult.Error(e)
         }
     }
 }

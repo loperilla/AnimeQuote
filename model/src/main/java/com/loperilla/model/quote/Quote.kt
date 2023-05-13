@@ -1,5 +1,7 @@
 package com.loperilla.model.quote
 
+import com.loperilla.model.interfaces.IModel
+
 /*****
  * Project: ComposeAnime
  * From: com.loperilla.model.quote
@@ -7,8 +9,8 @@ package com.loperilla.model.quote
  * All rights reserved 2023
  */
 
-data class Quote (
+data class Quote(
     val anime: String,
     val character: String,
     val quote: String
-)
+) : IModel

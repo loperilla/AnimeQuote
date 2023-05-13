@@ -1,9 +1,8 @@
 package com.loperilla.datasource.database.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.loperilla.datasource.database.entity.AnimeEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -22,6 +21,6 @@ interface AnimeDao {
     @Query("SELECT * FROM AnimeEntity WHERE name LIKE '%' || :filterName || '%'")
     fun getAnimeByName(filterName: String): Flow<List<AnimeEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     fun addAnimeList(animeList: List<AnimeEntity>): LongArray
 }

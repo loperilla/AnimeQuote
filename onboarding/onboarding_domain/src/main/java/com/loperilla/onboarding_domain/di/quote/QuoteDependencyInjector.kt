@@ -1,7 +1,10 @@
 package com.loperilla.onboarding_domain.di.quote
 
+import androidx.paging.Pager
 import com.loperilla.data.network.QuoteRepository
-import com.loperilla.onboarding_domain.usecase.QuoteUseCase
+import com.loperilla.model.quote.Quote
+import com.loperilla.onboarding_domain.usecase.quote.QuotePagingUseCase
+import com.loperilla.onboarding_domain.usecase.quote.QuoteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,9 +20,13 @@ import dagger.hilt.android.components.ViewModelComponent
 @Module
 @InstallIn(ViewModelComponent::class)
 object QuoteDependencyInjector {
-
     @Provides
-    fun providesDoLoginUseCase(
+    fun providesQuoteUseCase(
         quoteRepository: QuoteRepository
     ): QuoteUseCase = QuoteUseCase(quoteRepository)
+
+    @Provides
+    fun provideQuotePagingUseCase(
+        pager: Pager<Int, Quote>
+    ) = QuotePagingUseCase(pager)
 }

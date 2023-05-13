@@ -2,22 +2,21 @@
 androidx-activity = "1.7.1"
 androidx-lifecycle = "2.6.1"
 androidx-test-espresso = "3.5.1"
-compose-compiler = "1.4.6"
-hilt-version = "2.45"
+compose-compiler = "1.4.7"
+hilt-version = "2.46.1"
 ktor-version = "2.3.0"
-org-jetbrains-kotlin = "1.8.20"
+org-jetbrains-kotlin = "1.8.21"
 room-version = "2.5.1"
 
 [libraries]
 #Compose
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
-build-gradle = "com.android.tools.build:gradle:8.0.0"
-compose-bom = "androidx.compose:compose-bom:2023.04.01"
+compose-bom = "androidx.compose:compose-bom:2023.05.01"
 compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
-compose-material3 = "androidx.compose.material3:material3:1.0.1"
-compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.4.2"
+compose-material3 = "androidx.compose.material3:material3:1.1.0"
+compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.4.3"
 compose-navigation = "androidx.navigation:navigation-compose:2.5.3"
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 compose-ui = { module = "androidx.compose.ui:ui" }
@@ -37,13 +36,16 @@ hilt-navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
 junit = "junit:junit:4.13.2"
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "org-jetbrains-kotlin" }
-ktor-client = { module = "io.ktor:ktor-client-android", version.ref = "ktor-version" }
+ktor-android-client = { module = "io.ktor:ktor-client-android", version.ref = "ktor-version" }
 ktor-client-serialization = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
 ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-version" }
 ktor-logging = { module = "io.ktor:ktor-client-logging-jvm", version.ref = "ktor-version" }
+ktor-okkhttp-client = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor-version" }
 lifecycle-compose-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
 lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+paging-compose = "androidx.paging:paging-compose:1.0.0-alpha19"
+paging-runtime = "androidx.paging:paging-runtime-ktx:3.1.1"
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-version" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-version" }
@@ -65,16 +67,21 @@ compose = [
     "lifecycle-compose-viewmodel",
 ]
 ktor = [
-    "ktor-client",
+    "ktor-android-client",
     "ktor-client-serialization",
     "ktor-json",
     "ktor-logging",
+    "ktor-okkhttp-client",
+]
+paging = [
+    "paging-compose",
+    "paging-runtime",
 ]
 
 [plugins]
-application = "com.android.application:8.0.0"
+application = "com.android.application:8.0.1"
 ben-manes-versions = "com.github.ben-manes.versions:0.46.0"
-kotlin-android = "org.jetbrains.kotlin.android:1.8.20"
-ktor-serialization = "org.jetbrains.kotlin.plugin.serialization:1.8.20"
-library = "com.android.library:8.0.0"
+kotlin-android = "org.jetbrains.kotlin.android:1.8.21"
+ktor-serialization = "org.jetbrains.kotlin.plugin.serialization:1.8.21"
+library = "com.android.library:8.0.1"
 version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.0"

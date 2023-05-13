@@ -9,7 +9,7 @@ import com.loperilla.datasource.model.QuoteNetwork
  * All rights reserved 2023
  */
 interface QuoteApi {
-    suspend fun getRandomQuotes(): Result<List<QuoteNetwork>>
+    suspend fun getRandomQuotes(page: Int): Result<List<QuoteNetwork>>
     suspend fun getRandomQuotesByAnimeTitle(animeTitle: String): Result<List<QuoteNetwork>>
     suspend fun getRandomQuotesByCharacter(name: String): Result<List<QuoteNetwork>>
 }

@@ -37,6 +37,7 @@ fun SearchField(
     placeHolderText: String
 ) {
     var isInputFocused by rememberSaveable { mutableStateOf(false) }
+    //
     val colors = TextFieldDefaults.colors(
         focusedContainerColor = Color(0xFFDEDDDD),
         unfocusedContainerColor = Color(0xFFDEDDDD),

@@ -2,22 +2,18 @@ package com.loperilla.onboarding.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.items
-import com.loperilla.core_ui.LOW
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
+import com.loperilla.core_ui.MEDIUM
 import com.loperilla.model.quote.Quote
 import com.loperilla.onboarding.common.QuoteItem
 
@@ -53,67 +49,33 @@ fun QuotePagingList(
     modifier: Modifier = Modifier,
     quoteList: LazyPagingItems<Quote>
 ) {
-    LazyColumn(
-        modifier = modifier
-    ) {
-        items(
-            items = quoteList
-        ) { quote ->
-            if (quote != null) {
-                QuoteItem(quote)
-            }
-        }
-        when (val state = quoteList.loadState.refresh) {
-            is LoadState.Error -> {
-
-            }
-
-            LoadState.Loading -> {
-                item {
-                    Column(
-                        modifier = Modifier
-                            .fillParentMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .padding(LOW),
-                            text = "Refresh Loading"
-                        )
-
-                        CircularProgressIndicator(color = Color.Black)
+    Box(modifier = modifier.fillMaxSize()) {
+        if (quoteList.loadState.refresh is LoadState.Loading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center)
+            )
+        } else {
+            LazyColumn(
+                modifier = modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(MEDIUM),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                items(
+                    count = quoteList.itemCount,
+                    key = quoteList.itemKey(),
+                    contentType = quoteList.itemContentType()
+                ) { index ->
+                    val item = quoteList[index]
+                    if (item != null) {
+                        QuoteItem(item)
                     }
                 }
-
-            }
-
-            is LoadState.NotLoading -> {
-
-            }
-        }
-        when (val state = quoteList.loadState.append) { // Pagination
-            is LoadState.Error -> {
-                //TODO Pagination Error Item
-                //state.error to get error message
-            }
-
-            is LoadState.Loading -> { // Pagination Loading UI
                 item {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-                        Text(text = "Pagination Loading")
-
-                        CircularProgressIndicator(color = Color.Black)
+                    if (quoteList.loadState.append is LoadState.Loading) {
+                        CircularProgressIndicator()
                     }
                 }
             }
-
-            else -> {}
         }
     }
 }

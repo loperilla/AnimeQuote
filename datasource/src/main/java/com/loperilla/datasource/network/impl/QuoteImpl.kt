@@ -61,10 +61,15 @@ class QuoteImpl @Inject constructor(
         }
     }
 
-    override suspend fun getRandomQuotesByAnimeTitle(animeTitle: String): Result<List<QuoteNetwork>> = runCatching {
+    override suspend fun getRandomQuotesByAnimeTitle(
+        animeTitle: String,
+        page: Int
+    ): Result<List<QuoteNetwork>> = runCatching {
         val httpResponse: HttpResponse = ktorClient.get {
             url(QUOTES.BY_ANIME_TITLE)
             parameter("title", animeTitle)
+            parameter("pages", "$page")
+            accept(ContentType.Application.Json)
         }
 
         json.decodeFromString(

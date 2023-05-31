@@ -1,7 +1,9 @@
 package com.loperilla.onboarding_domain.di.anime
 
+import com.loperilla.data.combined.anime.AnimeQuoteRepository
 import com.loperilla.data.combined.anime.AnimeRepository
 import com.loperilla.onboarding_domain.usecase.anime.GetAllAnimeUseCase
+import com.loperilla.onboarding_domain.usecase.combined.AnimeQuoteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,4 +24,9 @@ object AnimeDependencyInjector {
     fun provideGetAllAnimeUseCase(
         repository: AnimeRepository
     ): GetAllAnimeUseCase = GetAllAnimeUseCase(repository)
+
+    @Provides
+    fun providesCombinedAnimeQuoteUseCase(
+        repository: AnimeQuoteRepository
+    ) = AnimeQuoteUseCase(repository)
 }

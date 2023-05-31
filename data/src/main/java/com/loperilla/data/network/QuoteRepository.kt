@@ -37,8 +37,9 @@ class QuoteRepository @Inject constructor(
 //        }
 //    }.flowOn(dispatcher)
 
+    //QuoteAnimePagingSource
     suspend fun getQuotesByAnimeTitle(title: String): Flow<CallResult<List<Quote>>> = flow {
-        val result: Result<List<QuoteNetwork>> = quoteApi.getRandomQuotesByAnimeTitle(title)
+        val result: Result<List<QuoteNetwork>> = quoteApi.getRandomQuotesByAnimeTitle(title, 1)
         if (result.isFailure || result.getOrNull().isNullOrEmpty()) {
             emit(CallResult.Exception(ErrorType.UncontrolledError(22)))
         } else {
@@ -47,8 +48,8 @@ class QuoteRepository @Inject constructor(
                 CallResult.Success(
                     networkQuoteList.map {
                         it.toDomain()
-                }
-            ))
+                    }
+                ))
         }
     }.flowOn(dispatcher)
 

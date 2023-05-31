@@ -4,7 +4,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 buildscript {
     dependencies {
         classpath(libs.kotlin.gradle)
-        classpath("com.android.tools.build:gradle:8.0.1")
+        classpath(libs.build.gradle)
         classpath(libs.hilt.gradle)
         classpath(libs.kotlin.serialization)
     }
@@ -32,13 +32,7 @@ fun isNonStable(version: String): Boolean {
 
 // Tarea para setear estas versiones estables al actualizar dependencias
 tasks.withType<DependencyUpdatesTask> {
-    resolutionStrategy {
-        componentSelection {
-            all {
-                if (isNonStable(candidate.version) && !isNonStable(currentVersion)) {
-                    reject("Release candidate")
-                }
-            }
-        }
+    rejectVersionIf {
+        isNonStable(candidate.version)
     }
 }

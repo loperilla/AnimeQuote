@@ -1,10 +1,12 @@
 package com.loperilla.datasource.database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Upsert
 import com.loperilla.datasource.database.entity.QuoteEntity
-import kotlinx.coroutines.flow.Flow
+import com.loperilla.model.quote.Quote
 
 /*****
  * Project: ComposeAnime
@@ -18,11 +20,15 @@ interface QuoteDao {
     suspend fun getAllQuotes(): List<QuoteEntity>
 
     @Query("SELECT * FROM QuoteEntity WHERE anime LIKE '%' || :animeTitle || '%'")
-    fun getQuoteByAnime(animeTitle: String): Flow<List<QuoteEntity>>
+    suspend fun getQuoteByAnime(animeTitle: String): List<QuoteEntity>
 
-    @Query("SELECT * FROM QuoteEntity WHERE character LIKE '%' || :characterName || '%'")
-    fun getQuoteByCharacter(characterName: String): Flow<List<QuoteEntity>>
+    @Query("SELECT * FROM QuoteEntity WHERE character LIKE '%' || :characterName || '%' LIMIT :pageSize OFFSET :startPage")
+    fun getQuoteByAnimePaged(
+        characterName: String,
+        startPage: Int,
+        pageSize: Int = 10
+    ): PagingSource<Int, Quote>
 
-    @Upsert
-    fun addAnimeList(characterList: List<QuoteEntity>): LongArray
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addQuoteList(characterList: List<QuoteEntity>): LongArray
 }

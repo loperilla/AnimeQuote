@@ -2,10 +2,12 @@ package com.loperilla.data.di
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.loperilla.data.combined.anime.AnimeQuoteRepository
 import com.loperilla.data.combined.anime.AnimeRepository
 import com.loperilla.data.combined.character.CharacterRepository
 import com.loperilla.data.combined.mediador.QuotePagingSource
 import com.loperilla.data.network.QuoteRepository
+import com.loperilla.datasource.database.AnimeDatabase
 import com.loperilla.datasource.database.dao.AnimeDao
 import com.loperilla.datasource.database.dao.CharacterDao
 import com.loperilla.datasource.database.dao.QuoteDao
@@ -47,6 +49,12 @@ object DataDependencyInjector {
             QuotePagingSource(quoteApi, quoteDao)
         }
     )
+
+    @Provides
+    fun providesAnimeQuoteRepository(
+        quoteDb: AnimeDatabase,
+        quoteApi: QuoteApi
+    ) = AnimeQuoteRepository(quoteDb, quoteApi)
 
     @Provides
     fun provideAnimeRepository(

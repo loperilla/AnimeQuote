@@ -49,7 +49,7 @@ class QuotePagingSource @Inject constructor(
                     val networkQuoteList = result.getOrElse {
                         emptyList()
                     }
-                    quoteDao.addAnimeList(
+                    quoteDao.addQuoteList(
                         networkQuoteList.map {
                             it.toEntity()
                         }

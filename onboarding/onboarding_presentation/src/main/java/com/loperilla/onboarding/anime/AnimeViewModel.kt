@@ -2,14 +2,15 @@ package com.loperilla.onboarding.anime
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.loperilla.model.quote.Anime
-import com.loperilla.model.quote.Quote
 import com.loperilla.model.result.CallResult
 import com.loperilla.model.ui.AnimeState
 import com.loperilla.onboarding_domain.usecase.anime.GetAllAnimeUseCase
-import com.loperilla.onboarding_domain.usecase.quote.QuoteUseCase
+import com.loperilla.onboarding_domain.usecase.combined.AnimeQuoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +19,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -35,7 +39,7 @@ import kotlin.time.Duration.Companion.seconds
 @OptIn(FlowPreview::class)
 class AnimeViewModel @Inject constructor(
     private val getAllAnimeUseCase: GetAllAnimeUseCase,
-    private val quoteUseCase: QuoteUseCase
+    private val animeQuoteUseCase: AnimeQuoteUseCase
 ) : ViewModel() {
 
     private var _animeState: MutableStateFlow<AnimeState> = MutableStateFlow(AnimeState.Loading)
@@ -46,6 +50,8 @@ class AnimeViewModel @Inject constructor(
 
     private val _isSearching: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isSearching: StateFlow<Boolean> = _isSearching.asStateFlow()
+
+    private var page = 0
 
     private val _animeList = MutableStateFlow(listOf<Anime>())
     val animeList = searchText
@@ -67,6 +73,22 @@ class AnimeViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000),
             _animeList.value
         )
+
+    private val _animePagingQuotes = MutableStateFlow<Anime?>(null)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val quotes = _animePagingQuotes
+        .filterNotNull()
+        .distinctUntilChanged()
+        .flatMapLatest { anime ->
+            animeQuoteUseCase
+                .getQuotesByAnime(anime.name, page).flow
+        }.onEach {
+            _animeState.update {
+                AnimeState.ResultSearch
+            }
+            page += 1
+        }.cachedIn(viewModelScope)
 
     fun getAllAnime() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -94,16 +116,7 @@ class AnimeViewModel @Inject constructor(
     fun selectAnime(anime: Anime) {
         viewModelScope.launch(Dispatchers.IO) {
             _searchText.value = anime.name
-            quoteUseCase.getByAnimeTitle(anime.name).collect { result: CallResult<List<Quote>> ->
-                when (result) {
-                    is CallResult.Exception -> TODO()
-                    is CallResult.Success -> {
-                        _animeState.update {
-                            AnimeState.ResultSearch(result.data ?: emptyList())
-                        }
-                    }
-                }
-            }
+            _animePagingQuotes.value = anime
         }
     }
 

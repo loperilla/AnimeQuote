@@ -50,6 +50,10 @@ dependencies {
     implementation(libs.bundles.compose)
     // Paging
     implementation(libs.bundles.paging)
+
+    implementation(libs.room.ktx)
+    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
     // Datastore
     implementation(libs.datastore)
     // Hilt
